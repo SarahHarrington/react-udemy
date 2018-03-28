@@ -34,6 +34,7 @@ class App extends Component {
         <UserOutput 
           click={this.changeUsernameHandler.bind(this, 'Sarah is Super cool!')}/>
         <UserOutput />
+        <UserOutput />
       </div>
     );
   }
