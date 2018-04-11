@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import Radium, {StyleRoot} from 'radium';
 import Person from './Person/Person.js'; //This needs to start with an uppercase character
 
 
@@ -75,10 +74,7 @@ class App extends Component {
         </div> 
       );
       style.backgroundColor = 'red';
-      style[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black'
-      }
+
     }
 
     const classes = [];
@@ -90,7 +86,6 @@ class App extends Component {
     }
 
     return (
-      <StyleRoot>
         <div className="App">
           <h1>Hello I'm a react app.</h1>
           <p className={classes.join(' ')}>This is really working!</p>
@@ -99,10 +94,9 @@ class App extends Component {
             style={style} >Switch Name </button>
             { persons }  
         </div>
-      </StyleRoot>
     );
     // return React.createElement('div', null, React.createElement('h1', {className: 'App'}, 'Hello, I\'m a react app'));
   }
 }
 
-export default Radium(App); //component wrapping my component, injectiong some extra syntax
+export default App; //component wrapping my component, injectiong some extra syntax
