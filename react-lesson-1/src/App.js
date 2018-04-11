@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium, {StyleRoot} from 'radium';
 import Person from './Person/Person.js'; //This needs to start with an uppercase character
+
 
 class App extends Component {
   state = {
@@ -45,11 +47,16 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     }
 
     let persons = null;
@@ -66,21 +73,36 @@ class App extends Component {
               changed={(event) => this.nameChangedHandler(event, person.id)}/>
           })}
         </div> 
-      )
+      );
+      style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
+    }
+
+    const classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push('red'); //classes will be ['red']
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold'); //classes will be ['red', 'bold']
     }
 
     return (
-      <div className="App">
-        <h1>Hello I'm a react app.</h1>
-        <p>This is really working!</p>
-        <button 
-          onClick={this.togglePersonHandler}
-          style={style} >Switch Name </button>
-          { persons }  
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <h1>Hello I'm a react app.</h1>
+          <p className={classes.join(' ')}>This is really working!</p>
+          <button 
+            onClick={this.togglePersonHandler}
+            style={style} >Switch Name </button>
+            { persons }  
+        </div>
+      </StyleRoot>
     );
     // return React.createElement('div', null, React.createElement('h1', {className: 'App'}, 'Hello, I\'m a react app'));
   }
 }
 
-export default App;
+export default Radium(App); //component wrapping my component, injectiong some extra syntax
