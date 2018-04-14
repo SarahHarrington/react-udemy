@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classes from './App.css'; //with the changes to the config files will scope them to the js file
 import Person from './Person/Person.js'; //This needs to start with an uppercase character
-
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -47,20 +47,24 @@ class App extends Component {
   render() {
 
     let persons = null;
+    let btnClass = '';
 
     if (this.state.showPersons === true) {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return <Person 
-              click={() => this.deletePersonHandler(index)}
-              name={ person.name } 
-              age={ person.age }
-              key={ person.id }
-              changed={(event) => this.nameChangedHandler(event, person.id)}/>
+            return <ErrorBoundary key={ person.id }>
+              <Person 
+                click={() => this.deletePersonHandler(index)}
+                name={ person.name } 
+                age={ person.age }
+                changed={(event) => this.nameChangedHandler(event, person.id)}/>
+              </ErrorBoundary>
           })}
         </div> 
       );
+
+      btnClass = classes.Red;
     }
 
     const assignedClasses = [];
@@ -75,7 +79,8 @@ class App extends Component {
         <div className={classes.App}>
           <h1>Hello I'm a react app.</h1>
           <p className={assignedClasses.join(' ')}>This is really working!</p>
-          <button 
+          <button
+            className={btnClass}
             onClick={this.togglePersonHandler}>Toggle People
           </button>
             { persons }  
