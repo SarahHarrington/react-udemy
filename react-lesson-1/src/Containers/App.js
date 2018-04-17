@@ -1,18 +1,47 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import classes from './App.css'; //with the changes to the config files will scope them to the js file
 import Persons from '../Components/Persons/Persons'; //This needs to start with an uppercase character
 import Cockpit from '../Components/Cockpit/Cockpit';
 
-class App extends Component {
-  state = {
-    persons: [
-      {name: 'Max', age: 28, id: 1},
-      {name: 'Manu', age: 29, id: 2},
-      {name: 'Stephanie', age: 26, id: 3}
-    ],
-    otherState: 'some other value',
-    showPersons: false
+class App extends PureComponent {
+  constructor(props) { //if we implement our own constructor, we have to call super(props)
+    super(props);
+    console.log('[App.js] Inside Constuctor', props);
+
+    //you can initialize state in the constructor
+    this.state = {
+      persons: [
+        {name: 'Max', age: 28, id: 1},
+        {name: 'Manu', age: 29, id: 2},
+        {name: 'Stephanie', age: 26, id: 3}
+      ],
+      otherState: 'some other value',
+      showPersons: false
+    }
   }
+
+  componentWillMount() {
+    console.log('[App.js] inside componentWillMount()')
+  }
+
+  componentDidMount() {
+    console.log('[App.js] inside componentDidMount')
+  }
+
+  // shouldComponentUpdate() {
+  //   return true;
+  // }
+
+  //this is realatively new for React
+  // state = {
+  //   persons: [
+  //     {name: 'Max', age: 28, id: 1},
+  //     {name: 'Manu', age: 29, id: 2},
+  //     {name: 'Stephanie', age: 26, id: 3}
+  //   ],
+  //   otherState: 'some other value',
+  //   showPersons: false
+  // }
 
   deletePersonHandler = (personIndex) => {
     const persons = [...this.state.persons] //spreads the existing array in to a new array
@@ -43,7 +72,7 @@ class App extends Component {
   }
 
   render() {
-
+    console.log('[App.js] inside render()')
     let persons = null;
 
     if (this.state.showPersons === true) {
@@ -56,6 +85,7 @@ class App extends Component {
 
     return (
         <div className={classes.App}>
+        <button onClick={() => {this.setState({showPersons: true})}}>Show Persons</button>
           <Cockpit 
             showPersons={this.state.showPersons} 
             persons={this.state.persons} 
