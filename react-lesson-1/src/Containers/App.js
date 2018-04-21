@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import classes from './App.css'; //with the changes to the config files will scope them to the js file
 import Persons from '../Components/Persons/Persons'; //This needs to start with an uppercase character
 import Cockpit from '../Components/Cockpit/Cockpit';
+import WithClass from '../HOC/WithClass';
 
 class App extends PureComponent {
   constructor(props) { //if we implement our own constructor, we have to call super(props)
@@ -84,14 +85,14 @@ class App extends PureComponent {
     }
 
     return (
-        <div className={classes.App}>
+        <WithClass classes={classes.App}>
         <button onClick={() => {this.setState({showPersons: true})}}>Show Persons</button>
           <Cockpit 
             showPersons={this.state.showPersons} 
             persons={this.state.persons} 
             clicked={this.togglePersonHandler}/>
             { persons }   
-        </div>
+        </WithClass>
     );
   }
 }
